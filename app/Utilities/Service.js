@@ -60,7 +60,7 @@ class Service {
         })
 
         const result = async () => (await Database.raw(`CALL ${storeProc}(${questions.join(',')})`, values))[0][0]
-        console.log(storeProc, questions, values)
+        
         return (call) ? this.Cache.cacheSP(this.name, result) : result()
     }
 

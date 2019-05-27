@@ -25,7 +25,7 @@ class ProductController extends Controller {
     }
 
     async search({ request }) {
-        const { all_words = 'on', query_string, page = 1, limit = 20, description_length = 200 } = request.get()
+        const { all_words = 'on', query_string, page = 0, limit = 20, description_length = 200 } = request.get()
 
         return await ProductService.search(all_words, query_string, page, limit, description_length)
     } 

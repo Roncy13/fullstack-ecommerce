@@ -1,6 +1,7 @@
 'use strict'
 
 const Service = use('App/Utilities/Service')
+const Database = use('Database')
 
 class ProductService extends Service {
 
@@ -8,7 +9,7 @@ class ProductService extends Service {
         super(name)
     }
 
-    async search(all_words = 'on', query_string, page = 1, limit = 20, description_length = 200) {
+    async search(all_words = 'on', query_string, page = 0, limit = 20, description_length = 200) {
        const rows = await this.spNoCache('catalog_search', [
            query_string,
            all_words,
