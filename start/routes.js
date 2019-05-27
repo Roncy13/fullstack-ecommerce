@@ -20,4 +20,11 @@ Route.get('product/:id', 'ProductController.byId')
 
 Route.get('departments', 'DepartmentController.list')
 Route.get('departments/:department_id', 'DepartmentController.byId')
-Route.get('categories', 'CategoryController.list')
+Route.get('categories', 'CategoryController.page')
+Route.get('categories/:category_id', 'CategoryController.byId')
+
+Route.get('/categories/inProduct/:product_id', 'CategoryController.product')
+Route.get('/categories/inDepartment/:department_id', 'CategoryController.department')
+Route.get('/attributes/:attribute_id', 'AttributeController.list')
+
+

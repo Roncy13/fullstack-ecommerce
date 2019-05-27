@@ -20,7 +20,7 @@ class Service {
         const { total: count, data: rows } = data.toJSON()
 
         return {
-            count,
+            count: (rows.length > 0) ? count: 0,
             rows
         }
     }
@@ -58,19 +58,15 @@ class Service {
     async callSP(storeProc = "", args = []) {
         const questions = [],
             values = []
-        
-        console.log(args)
-
+       
         args.forEach(val => {
             questions.push('?')
             values.push(val)
         })
 
-        console.log(questions, values)
-
         const result = async () => (await Database.raw(`CALL ${storeProc}(${questions.join(',')})`, values))[0][0]
        
-        return this.Cache.cacheSP('', result)
+        return this.Cache.cacheSP(this.name, result)
     }
 }
 
