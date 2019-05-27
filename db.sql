@@ -453,7 +453,7 @@ BEGIN
                         p.description,
                         CONCAT(LEFT(p.description, ?),
                                '...')) AS description,
-                     p.price, p.discounted_price, p.thumbnail
+                     p.price, p.discounted_price, p.thumbnail, p.display
      FROM            product p
      INNER JOIN      product_category pc
                        ON p.product_id = pc.product_id

@@ -31,6 +31,6 @@ Route.get('products', 'ProductController.page')
 Route.get('/products/search', 'ProductController.search')
 Route.get('/products/:id', 'ProductController.byId')
 Route.get('/products/inCategory/:category_id', 'ProductController.categories')
-
+Route.get('/products/inDepartment/:department_id',  'ProductController.department')
 
 
