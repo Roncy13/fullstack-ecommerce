@@ -50,7 +50,7 @@ class Service {
             await func()
     }
 
-    async callSP(storeProc = "", args = []) {
+    async callSP(storeProc = "", args = [], call = true) {
         const questions = [],
             values = []
        
@@ -60,8 +60,12 @@ class Service {
         })
 
         const result = async () => (await Database.raw(`CALL ${storeProc}(${questions.join(',')})`, values))[0][0]
-       
-        return this.Cache.cacheSP(this.name, result)
+        console.log(storeProc, questions, values)
+        return (call) ? this.Cache.cacheSP(this.name, result) : result()
+    }
+
+    async spNoCache(storeProc = "", args = []) {
+        return await this.callSP(storeProc, args, false)
     }
 }
 
