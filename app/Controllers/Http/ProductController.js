@@ -6,16 +6,9 @@ const Controller = use('App/Utilities/Controller')
 class ProductController extends Controller {
 
     async byId({ params: { id }, response }) {
-        //const result = await ProductService.byId(id)
+        const result = await ProductService.byId(id)
 
-        //return (result) ? result : this.noData(response, 'PROD_01', 'id')
-        const result = await await Database
-            .raw('CALL catalog_get_departments_list()')
-        
-        console.log(result)
-
-        return result[0][0]
-            //.raw('select * from users where username = ?', [username])
+        return (result) ? result : this.noData(response, 'PROD_01', 'id')
     }
 
     page({ request }) {
@@ -28,7 +21,13 @@ class ProductController extends Controller {
         const { all_words = 'on', query_string, page = 0, limit = 20, description_length = 200 } = request.get()
 
         return await ProductService.search(all_words, query_string, page, limit, description_length)
-    } 
+    }
+
+    async categories ({ request, params: { category_id } }) {
+        const { page = 1, limit = 20, description_length = 200 } = request.get()
+
+        return await ProductService.categories(category_id, description_length, limit, page)
+    }
 }
 
 module.exports = ProductController

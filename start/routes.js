@@ -16,8 +16,6 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.get('product/:id', 'ProductController.byId')
-
 Route.get('departments', 'DepartmentController.list')
 Route.get('departments/:department_id', 'DepartmentController.byId')
 Route.get('categories', 'CategoryController.page')
@@ -31,5 +29,8 @@ Route.get('/attributes/inProduct/:product_id', 'AttributeController.product')
 
 Route.get('products', 'ProductController.page')
 Route.get('/products/search', 'ProductController.search')
+Route.get('/products/:id', 'ProductController.byId')
+Route.get('/products/inCategory/:category_id', 'ProductController.categories')
+
 
 

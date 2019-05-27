@@ -9,13 +9,13 @@ class ProductService extends Service {
         super(name)
     }
 
-    async search(all_words = 'on', query_string, page = 0, limit = 20, description_length = 200) {
+    async search(all_words = 'on', query_string, page = 1, limit = 20, description_length = 200) {
        const rows = await this.spNoCache('catalog_search', [
            query_string,
            all_words,
            description_length,
            limit,
-           page
+           page - 1
         ]),
         count = (await this.spNoCache('catalog_count_search_result', [
             query_string,
@@ -26,6 +26,28 @@ class ProductService extends Service {
             count,
             rows
         }
+    }
+
+    async categories(inCategoryId, inShortProductDescriptionLength = 200, inProductsPerPage = 20, inStartItem = 1) {
+        const { 
+            data: [ 
+                row_first
+            ]} = (await this.callSP('catalog_count_products_in_category', [
+            inCategoryId
+        ]))
+
+        const { data } = await this.callSP('catalog_get_products_in_category', [
+            inCategoryId,
+            inShortProductDescriptionLength,
+            inProductsPerPage,
+            inStartItem - 1
+        ])
+
+        return {
+           count: row_first.categories_count,
+           data
+        }
+        
     }
 }
 

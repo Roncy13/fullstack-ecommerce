@@ -7,12 +7,12 @@ class Service {
     constructor(name) {
         this.Cache = use(`App/Utilities/CacheComponents/${name}Cache`)
         this.Model = use(`App/Models/${name}`)
-        this.name = name;
+        this.name = name.toLowerCase();
     }
 
     async byId(id) {
         return await this.Cache.get(id, async() => {
-            return await this.Model.find(id)
+            return await this.Model.findBy(`${this.name}_id`, id)
         })
     }
 
@@ -61,7 +61,7 @@ class Service {
 
         const result = async () => (await Database.raw(`CALL ${storeProc}(${questions.join(',')})`, values))[0][0]
         
-        return (call) ? this.Cache.cacheSP(this.name, result) : result()
+        return (call) ? this.Cache.cacheSP(`${this.name}-${ values.join(',') }`, result) : result()
     }
 
     async spNoCache(storeProc = "", args = []) {
