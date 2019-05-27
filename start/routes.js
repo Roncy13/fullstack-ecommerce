@@ -26,5 +26,6 @@ Route.get('categories/:category_id', 'CategoryController.byId')
 Route.get('/categories/inProduct/:product_id', 'CategoryController.product')
 Route.get('/categories/inDepartment/:department_id', 'CategoryController.department')
 Route.get('/attributes/:attribute_id', 'AttributeController.list')
-
+Route.get('/attributes/values/:attribute_id', 'AttributeController.values')
+Route.get('/attributes/inProduct/:product_id', 'AttributeController.product')
 
