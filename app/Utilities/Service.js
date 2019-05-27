@@ -25,34 +25,29 @@ class Service {
         }
     }
 
-    async pagination(page = 1, order = null, limit = null, sort = null) {
+    async pagination(page = 1, order = null, limit = null, sort = null, fields = null) {
        
         limit = (limit === null) ? 20 : limit
         
-        if (order === null && limit === 20 && sort === null) {
-
-            return await this.Cache.cacheSP(`${this.name}-${page}`, async() => {
-                const query = this.Model.query()
+        const func = async () => {
+            const query = this.Model.query()
                 
-                if (order != null) {
-                    query.orderBy(order, sort)  
-                }
+            if (order !== null) {
+                query.orderBy(order, sort)  
+            }
+            
+            if (fields !== null) {
+                query.select(fields.split(','))
+            }
+
+            const result = await query.paginate(page, limit)
     
-                const result = await query.paginate(page, limit)
-                
-                return this.pagiFormatter(result)
-            })
+            return this.pagiFormatter(result)
         }
 
-        const query = this.Model.query()
-                
-        if (order !== null) {
-            query.orderBy(order, sort)  
-        }
-
-        const result = await query.paginate(page, limit)
-
-        return this.pagiFormatter(result)
+        return (order === null && limit === 20 && sort === null) ? 
+            await this.Cache.cacheSP(`${this.name}-${page}`, func) : 
+            await func()
     }
 
     async callSP(storeProc = "", args = []) {

@@ -29,3 +29,5 @@ Route.get('/attributes/:attribute_id', 'AttributeController.list')
 Route.get('/attributes/values/:attribute_id', 'AttributeController.values')
 Route.get('/attributes/inProduct/:product_id', 'AttributeController.product')
 
+Route.get('products', 'ProductController.page')
+

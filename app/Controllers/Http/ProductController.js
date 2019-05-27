@@ -2,7 +2,6 @@
 
 const ProductService = use('App/Services/ProductService')
 const Controller = use('App/Utilities/Controller')
-const Database = use('Database')
 
 class ProductController extends Controller {
 
@@ -17,6 +16,12 @@ class ProductController extends Controller {
 
         return result[0][0]
             //.raw('select * from users where username = ?', [username])
+    }
+
+    page({ request }) {
+        const { page = 1, order = null, sort = null, limit = null } = request.get()
+        
+        return ProductService.pagination(page, order, limit, sort, 'product_id, name, description, price, discounted_price, thumbnail')
     }
 }
 
