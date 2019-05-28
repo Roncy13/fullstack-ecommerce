@@ -1,7 +1,6 @@
 'use strict'
 
 const Service = use('App/Utilities/Service')
-const Database = use('Database')
 
 class ProductService extends Service {
 

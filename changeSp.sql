@@ -1,35 +1,17 @@
 -- Change DELIMITER to $$
 DELIMITER $$
-
-CREATE PROCEDURE catalog_get_products_on_department(
-  IN inDepartmentId INT, IN inShortProductDescriptionLength INT,
-  IN inProductsPerPage INT, IN inStartItem INT)
+-- Create customer_update_account stored procedure
+CREATE PROCEDURE shopping_cart_update(IN inItemId VARCHAR(36), IN inQuantity INT)
 BEGIN
-  PREPARE statement FROM
-    "SELECT DISTINCT p.product_id, p.name,
-                     IF(LENGTH(p.description) <= ?,
-                        p.description,
-                        CONCAT(LEFT(p.description, ?),
-                               '...')) AS description,
-                     p.price, p.discounted_price, p.thumbnail, p.display
-     FROM            product p
-     INNER JOIN      product_category pc
-                       ON p.product_id = pc.product_id
-     INNER JOIN      category c
-                       ON pc.category_id = c.category_id
-     WHERE           (p.display = 2 OR p.display = 3)
-                     AND c.department_id = ?
-     ORDER BY        p.display DESC
-     LIMIT           ?, ?";
-
-  SET @p1 = inShortProductDescriptionLength;
-  SET @p2 = inShortProductDescriptionLength;
-  SET @p3 = inDepartmentId;
-  SET @p4 = inStartItem;
-  SET @p5 = inProductsPerPage;
-
-  EXECUTE statement USING @p1, @p2, @p3, @p4, @p5;
+  IF inQuantity > 0 THEN
+    UPDATE shopping_cart
+    SET    quantity = inQuantity, added_on = NOW()
+    WHERE  item_id = inItemId;
+  ELSE
+    CALL shopping_cart_remove_product(inItemId);
+  END IF;
 END$$
+
 
 -- Change back DELIMITER to ;
 DELIMITER ;

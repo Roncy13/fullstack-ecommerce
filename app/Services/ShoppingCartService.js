@@ -59,9 +59,22 @@ class ShoppingCartService extends Service {
         const customer_id = await this.getAuthId(auth),
             shopListKey = this.generateKey(cart_id, customer_id)
 
-        console.log(shopListKey)
-
         return await this.Cache.retrieveList(shopListKey)
+    }
+
+    async update(payload, cart_id, customer_id) {
+        
+        await this.callSP('shopping_cart_update', payload)
+
+        const key = this.generateKey(cart_id, customer_id),
+            data = (await this.Model
+                .query()
+                    .where('cart_id', cart_id)
+                    .fetch()).toJSON()
+
+        await this.Cache.forever(key, data)
+
+        return await this.Cache.retrieveList(key)
     }
 }
 

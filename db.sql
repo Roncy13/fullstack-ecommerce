@@ -1011,7 +1011,7 @@ BEGIN
 END$$
 
 -- Create shopping_cart_update_product stored procedure
-CREATE PROCEDURE shopping_cart_update(IN inItemId INT, IN inQuantity INT)
+CREATE PROCEDURE shopping_cart_update(IN inItemId VARCHAR(32), IN inQuantity INT)
 BEGIN
   IF inQuantity > 0 THEN
     UPDATE shopping_cart

@@ -21,8 +21,15 @@ class ShoppingCartController extends Controller {
     }
 
     list({ params: { cart_id }, auth }) {
-        
+
         return ShoppingCartService.shoppingList(auth, cart_id)
+    }
+
+    update({ params: { item_id, cart_id, customer_id }, request }) {
+        const { quantity } = request.all(),
+            payload = { item_id, quantity }
+
+        return ShoppingCartService.update(payload, cart_id, customer_id)
     }
 }
 
