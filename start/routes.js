@@ -43,3 +43,5 @@ Route.get('customer', 'CustomerController.info').middleware(['userKey'])
 Route.put('customer', 'CustomerController.update').middleware(['userKey'])
 Route.put('/customers/address', 'CustomerController.address').middleware(['userKey'])
 Route.put('/customers/creditCard', 'CustomerController.creditCard').middleware(['userKey'])
+
+Route.get('/shoppingcart/generateUniqueId', 'ShoppingCartController.uuid').middleware(['userKey'])

@@ -30,7 +30,8 @@
     "@adonisjs/shield": "^1.0.8",
     "adonis-cache": "^0.3.4",
     "lodash": "^4.17.11",
-    "mysql": "^2.17.1"
+    "mysql": "^2.17.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {},
   "autoload": {
