@@ -32,5 +32,12 @@ Route.get('/products/search', 'ProductController.search')
 Route.get('/products/:id', 'ProductController.byId')
 Route.get('/products/inCategory/:category_id', 'ProductController.categories')
 Route.get('/products/inDepartment/:department_id',  'ProductController.department')
+Route.get('/products/:product_id/details', 'ProductController.productDetailsbyId')
+Route.get('/products/:product_id/locations', 'ProductController.productLocationsbyId')
+Route.get('/products/:product_id/reviews', 'ProductController.productReviewsbyId')
 
-
+// Customer end points
+Route.post('customers', 'CustomerController.register')
+Route.post('/customers/login', 'CustomerController.verify')
+Route.get('customer', 'CustomerController.info').middleware(['userKey'])
+Route.put('customer', 'CustomerController.update').middleware(['userKey'])

@@ -71,7 +71,18 @@ class ProductService extends Service {
            count,
            data
         }
-        
+    }
+
+    productDetailsbyId(product_id) {
+        return this.callSP('catalog_get_product_details', [product_id])
+    }
+
+    productLocationsbyId(product_id) {
+        return this.callSP('catalog_get_product_locations', [product_id])
+    }
+
+    productReviewsbyId(product_id) {
+        return this.callSP('catalog_get_product_reviews', [product_id])
     }
 }
 

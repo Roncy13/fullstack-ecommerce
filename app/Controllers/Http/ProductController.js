@@ -25,7 +25,7 @@ class ProductController extends Controller {
 
     async categories ({ request, params: { category_id } }) {
         const { page = 1, limit = 20, description_length = 200 } = request.get()
-        
+
         return await ProductService.categories(category_id, description_length, limit, page)
     }
 
@@ -33,6 +33,18 @@ class ProductController extends Controller {
         const { page = 1, limit = 20, description_length = 200 } = request.get()
 
         return await ProductService.department(department_id, description_length, limit, page)
+    }
+
+    productDetailsbyId({ params: { product_id } }) {
+        return ProductService.productDetailsbyId(product_id)
+    }
+
+    productLocationsbyId({ params: { product_id } }) {
+        return ProductService.productLocationsbyId(product_id)
+    }
+
+    productReviewsbyId({ params: { product_id } }) {
+        return ProductService.productReviewsbyId(product_id)
     }
 }
 
