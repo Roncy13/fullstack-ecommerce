@@ -45,3 +45,5 @@ Route.put('/customers/address', 'CustomerController.address').middleware(['userK
 Route.put('/customers/creditCard', 'CustomerController.creditCard').middleware(['userKey'])
 
 Route.get('/shoppingcart/generateUniqueId', 'ShoppingCartController.uuid').middleware(['userKey'])
+Route.post('/shoppingcart/add', 'ShoppingCartController.add').middleware(['userKey'])
+Route.get('/shoppingcart/:cart_id', 'ShoppingCartController.list').middleware(['userKey'])

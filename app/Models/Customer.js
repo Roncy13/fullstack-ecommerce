@@ -40,6 +40,15 @@ class Customer extends Model {
   static get visible() {
     return [ 'customer_id', 'name', 'email', 'credit_card', 'address_1', 'address_2', 'city', 'region', 'postal_code', 'country', 'shipping_region_id', 'day_phone', 'eve_phone', 'mob_phone' ]
   }
+
+  shoppingCart() {
+    return this
+        .hasMany(
+            'App/Models/ShoppingCartUser',
+            'customer_id',
+            'customer_id'
+        )
+  }
 }
 
 module.exports = Customer

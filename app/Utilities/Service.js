@@ -1,6 +1,8 @@
 'use strict'
 
 const Database = use('Database')
+const { isObject, values: getValues } = require('lodash')
+const shortId = require('shortid32')
 
 class Service {
     
@@ -8,6 +10,16 @@ class Service {
         this.Cache = use(`App/Utilities/CacheComponents/${name}Cache`)
         this.Model = use(`App/Models/${name}`)
         this.name = name.toLowerCase();
+    }
+
+    UUID() {
+        return shortId.generate()
+    }
+
+    async getAuthId(auth) {
+        const { customer_id } = await auth.getUser()
+
+        return customer_id
     }
 
     async byId(id) {
@@ -53,7 +65,11 @@ class Service {
     async callSP(storeProc = "", args = [], call = true) {
         const questions = [],
             values = []
-       
+        
+        if (isObject(args)) {
+            args = getValues(args)
+        }
+
         args.forEach(val => {
             questions.push('?')
             values.push(val)

@@ -17,6 +17,22 @@ class Cache {
       return this.get(val, func, false)
     }
 
+    store(keyVal, result) {
+      return Storage.add(keyVal, result, EXPIRATION);
+    }
+
+    forever(keyVal, result) {
+      return Storage.forever(keyVal, result, EXPIRATION);
+    }
+
+    async retrieveList(keyVal) {
+      return Storage.get(keyVal, [])
+    }
+
+    async retrieveData(keyVal) {
+      return Storage.get(keyVal, {})
+    }
+
     async get(val, storeFunction, parse = true) {
       const keyVal = this.getCacheKey(val)
         ,value = await Storage.get(keyVal);

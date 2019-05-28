@@ -2,14 +2,27 @@
 
 const ShoppingCartService = use('App/Services/ShoppingCartService')
 const Controller = use('App/Utilities/Controller')
-const uuidv1 = require('uuid/v1');
 
 class ShoppingCartController extends Controller {
 
-    uuid() {
-        const cart_id = uuidv1()
+    uuid({ auth }) {
+        return ShoppingCartService.uuid(auth)
+    }
 
-        return { cart_id }
+    add({ request, auth }) {
+        const { cart_id, product_id, attributes } = request.all(),
+            payload = {
+                cart_id,
+                product_id,
+                attributes
+            }
+        
+        return ShoppingCartService.add(payload, auth)
+    }
+
+    list({ params: { cart_id }, auth }) {
+        
+        return ShoppingCartService.shoppingList(auth, cart_id)
     }
 }
 
