@@ -86,6 +86,31 @@ class CustomerService extends Service {
 
         return this.getUserById(customer_id)
     }
+
+    async creditCard(payload, auth) {
+        const { customer_id } = (await auth.getUser()).toJSON(),
+            fields = [
+                'customer_id',
+                'credit_card'
+            ],
+            user = (await this.Model
+                .query()
+                    .select(fields)
+                    .setVisible(fields)
+                    .where({ customer_id })
+                        .first()
+            ).toJSON(),
+            update = map(
+                values(
+                    merge(user, pickBy(payload, identity))
+                ), (value) => 
+                ( value === null ) ? '' : value
+            )
+
+        await this.spNoCache('customer_update_credit_card', update)
+
+        return this.getUserById(customer_id)
+    }
 }
 
 module.exports = new CustomerService('Customer')

@@ -55,6 +55,14 @@ class CustomerController {
 
         return CustomerService.address(payload, auth)
     }
+
+    creditCard({ request, auth}) {
+        const {
+            credit_card
+        } = request.all()
+
+        return CustomerService.creditCard({ credit_card }, auth)
+    }
 }
 
 module.exports = CustomerController
