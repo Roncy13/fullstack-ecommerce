@@ -32,6 +32,29 @@ class CustomerController {
         
         return CustomerService.update(payload, auth)
     }
+
+    address({ request, auth }) {
+        const {
+            address_1,
+            address_2,
+            city,
+            region,
+            postal_code,
+            country,
+            shipping_region_id
+        } = request.all()
+        ,payload = {
+            address_1,
+            address_2,
+            city,
+            region,
+            postal_code,
+            country,
+            shipping_region_id
+        }
+
+        return CustomerService.address(payload, auth)
+    }
 }
 
 module.exports = CustomerController

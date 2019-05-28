@@ -15,7 +15,7 @@ class CustomerService extends Service {
             email,
             password
         }),
-            { customer_id, email: userEmail, password: userPassword } = data.toJSON()
+        { customer_id } = data.toJSON()
 
             
         const customer = await this.getUserById(customer_id),
@@ -53,7 +53,38 @@ class CustomerService extends Service {
 
         await this.spNoCache('customer_update_account', update)
 
-        return await this.getUserById(customer_id)
+        return this.getUserById(customer_id)
+    }
+
+    async address(payload, auth) {
+        const { customer_id } = (await auth.getUser()).toJSON(),
+            fields = [
+                'customer_id',
+                'address_1',
+                'address_2',
+                'city',
+                'region',
+                'postal_code',
+                'country',
+                'shipping_region_id'
+            ],
+            user = (await this.Model
+                .query()
+                    .select(fields)
+                    .setVisible(fields)
+                    .where({ customer_id })
+                        .first()
+            ).toJSON(),
+            update = map(
+                values(
+                    merge(user, pickBy(payload, identity))
+                ), (value) => 
+                ( value === null ) ? '' : value
+            )
+
+        await this.spNoCache('customer_update_address', update)
+
+        return this.getUserById(customer_id)
     }
 }
 
