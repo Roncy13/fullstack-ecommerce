@@ -89,6 +89,26 @@ class Service {
     async spNoCache(storeProc = "", args = []) {
         return await this.callSP(storeProc, args, false)
     }
+
+    async CacheQuery(keyword, func) {
+        const value = await this.Cache.retrieve(keyword)
+        
+        if (value) {
+            return { data: value, message: 'Data comes From Cache: Query' }
+        }
+
+        const data = await func()
+        
+        await this.Cache.store(keyword, data)
+
+        return { data, message: 'Data comes From Storage: Query' }
+    }
+
+    createCacheKey(val, key = null) {
+        const word = this.Cache.getCacheKey(val, key)
+        
+        return word
+    }
 }
 
 module.exports = Service

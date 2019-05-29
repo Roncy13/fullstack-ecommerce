@@ -64,3 +64,6 @@ Route.get('orders/shortDetail/:order_id', 'OrderController.shorDetail').middlewa
 Route.get('orders/items/:order_id', 'OrderController.items').middleware(['userKey'])
 
 
+Route.get('tax', 'TaxController.list')
+Route.get('tax/:tax_id', 'TaxController.info')
+

@@ -9,8 +9,8 @@ class Cache {
       this.key = key
     }
 
-    getCacheKey (value) {
-      return `${this.key}-${value}`;
+    getCacheKey(value, key = null) {
+      return `${(key === null) ? this.key : key }-${value}`;
     }
 
     getPrepCacheKey(value, prep) {
@@ -37,6 +37,10 @@ class Cache {
 
     async retrieveData(keyVal) {
       return Storage.get(keyVal, {})
+    }
+
+    async retrieve(keyVal) {
+      return Storage.get(keyVal)
     }
 
     async get(val, storeFunction, parse = true) {
