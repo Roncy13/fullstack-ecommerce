@@ -29,6 +29,10 @@ class OrderController {
     shorDetail({ params: { order_id } }) {
         return OrderService.details(order_id)
     }
+
+    items({ params: { order_id } }) {
+        return OrderService.items(order_id)
+    }
 }
 
 module.exports = OrderController

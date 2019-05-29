@@ -33,6 +33,10 @@ class OrderService extends Service {
     details(order_id) {
         return this.callPrepSP('orders_get_order_short_details', [order_id], 'short-details')
     }
+
+    items(order_id) {
+        return this.callPrepSP('orders_get_order_details', [order_id], 'items')
+    }
 }
 
 module.exports = new OrderService('Order')
