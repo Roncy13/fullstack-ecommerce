@@ -13,6 +13,12 @@ class Cache {
       return `${this.key}-${value}`;
     }
 
+    getPrepCacheKey(value, prep) {
+       const key = [prep, value].join('-')
+
+       return this.getCacheKey(key)
+    }
+
     async cacheSP(val, func) {
       return this.get(val, func, false)
     }

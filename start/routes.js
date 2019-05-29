@@ -58,8 +58,8 @@ Route.get('shoppingcart/removeProduct/:item_id', 'ShoppingCartController.remove'
 // Endpoints for Orders
 
 Route.post('orders', 'OrderController.create').middleware(['userKey'])
-Route.get('order/:order_id', 'OrderController.info').middleware(['userKey'])
+Route.get('orders/:order_id', 'OrderController.info').middleware(['userKey'])
 Route.get('orders/inCustomer', 'OrderController.list').middleware(['userKey'])
-
+Route.get('orders/shortDetail/:order_id', 'OrderController.shorDetail').middleware(['userKey'])
 
 

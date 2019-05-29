@@ -25,6 +25,10 @@ class OrderController {
 
         return await OrderService.list(customer_id)
     }
+
+    shorDetail({ params: { order_id } }) {
+        return OrderService.details(order_id)
+    }
 }
 
 module.exports = OrderController
