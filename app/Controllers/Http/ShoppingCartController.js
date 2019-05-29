@@ -58,6 +58,14 @@ class ShoppingCartController extends Controller {
             item_id
         })
     }
+
+    saved({ params: { cart_id } }) {
+        return ShoppingCartService.save(cart_id)
+    }
+
+    remove({ params: { cart_id, customer_id, item_id } }) {
+        return ShoppingCartService.remove(cart_id, customer_id, item_id)
+    }
 }
 
 module.exports = ShoppingCartController

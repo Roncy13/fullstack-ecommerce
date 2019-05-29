@@ -145,6 +145,27 @@ class ShoppingCartService extends Service {
 
         return data
     }
+
+    async save(cart_id) {
+        return this.Model
+            .query()
+                .where({ cart_id })
+                .andWhere('buy_now', false)
+                .fetch()
+    }
+
+    async remove(cart_id, customer_id, item_id) {
+        
+        const key = await this.generateKey(cart_id, customer_id)
+
+        await this.spNoCache('shopping_cart_remove_product', [item_id])
+        await this.Cache.remove(key)
+
+        const data = await this.callSP('shopping_cart_get_products', [cart_id])
+        await this.Cache.forever(key, data)
+        
+        return data
+    }
 }
 
 module.exports = new ShoppingCartService('ShoppingCart')

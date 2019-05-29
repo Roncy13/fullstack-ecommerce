@@ -54,3 +54,5 @@ Route.get('shoppingcart/:cart_id', 'ShoppingCartController.list').middleware(['u
 
 Route.get('shoppingcart/totalAmount/:cart_id', 'ShoppingCartController.totalAmount').middleware(['userKey', 'CartIdExist'])
 Route.get('shoppingcart/saveForLater/:item_id', 'ShoppingCartController.later').middleware(['userKey', 'ItemIdByUser'])
+Route.get('shoppingcart/getSaved/:cart_id', 'ShoppingCartController.saved').middleware(['userKey', 'CartIdExist'])
+Route.get('shoppingcart/removeProduct/:item_id', 'ShoppingCartController.remove').middleware(['userKey', 'ItemIdByUser'])
