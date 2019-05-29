@@ -22,7 +22,7 @@ class Cache {
     }
 
     forever(keyVal, result) {
-      return Storage.forever(keyVal, result, EXPIRATION);
+      return Storage.forever(keyVal, result);
     }
 
     async retrieveList(keyVal) {

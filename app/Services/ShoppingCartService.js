@@ -129,6 +129,22 @@ class ShoppingCartService extends Service {
         
         return data[0]
     }
+
+    async later(payload) {
+        const {
+            customer_id,
+            cart_id,
+            item_id
+        } = payload,
+        key = this.generateKey(cart_id, customer_id)
+
+        await this.spNoCache('shopping_cart_save_product_for_later', [item_id])
+        await this.Cache.remove(key)
+        const data = await this.callSP('shopping_cart_get_products', [cart_id])
+        await this.Cache.forever(key, data)
+
+        return data
+    }
 }
 
 module.exports = new ShoppingCartService('ShoppingCart')

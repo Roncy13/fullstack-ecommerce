@@ -49,6 +49,15 @@ class ShoppingCartController extends Controller {
     async totalAmount({ params: { cart_id } }) {
         return await ShoppingCartService.totalAmount(cart_id)
     }
+
+    later({ params: { cart_id, customer_id, item_id } }) {
+
+        return ShoppingCartService.later({
+            cart_id,
+            customer_id,
+            item_id
+        })
+    }
 }
 
 module.exports = ShoppingCartController
