@@ -64,6 +64,10 @@ class Cache {
     async flush() {
       return await Storage.flush();
     }
+
+    remove(key) {
+      return Storage.forget(key)
+    }
 }
 
 module.exports = Cache

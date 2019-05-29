@@ -3,6 +3,7 @@
 const Database = use('Database')
 const { isObject, values: getValues } = require('lodash')
 const shortId = require('shortid32')
+const ShoppingCartUser = use('App/Models/ShoppingCartUser')
 
 class Service {
     
@@ -14,6 +15,12 @@ class Service {
 
     UUID() {
         return shortId.generate()
+    }
+
+    async getCustomerByCart(cart_id) {
+        const { customer_id } = await ShoppingCartUser.findBy('cart_id', cart_id)
+        
+        return customer_id
     }
 
     async getAuthId(auth) {

@@ -80,6 +80,15 @@ class ShoppingCartService extends Service {
 
         return await this.Cache.retrieveList(key)
     }
+
+    async empty(cart_id) {
+        await this.spNoCache('shopping_cart_empty', [cart_id])
+
+        const customer_id = await this.getCustomerByCart(cart_id),
+            key = this.generateKey(cart_id, customer_id)
+
+        return await this.Cache.remove(key)
+    }
 }
 
 module.exports = new ShoppingCartService('ShoppingCart')

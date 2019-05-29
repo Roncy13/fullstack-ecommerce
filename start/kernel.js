@@ -41,7 +41,9 @@ const namedMiddleware = {
   auth: 'Adonis/Middleware/Auth',
   guest: 'Adonis/Middleware/AllowGuestOnly',
   userKey: 'App/Middleware/UserKey',
-  ItemIdByUser: 'App/Middleware/ItemIdByUser'
+  ItemIdByUser: 'App/Middleware/ItemIdByUser',
+  CartIdExist: 'App/Middleware/CartIdExist',
+  CartDetailsExist: 'App/Middleware/CartDetailsExist'
 }
 
 /*

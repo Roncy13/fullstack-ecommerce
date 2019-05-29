@@ -16,6 +16,15 @@ class ShoppingCart extends Model {
                 'cart_id'
             )
     }
+
+    orders(customer_id) {
+        return this
+            .hasOne(
+                'App/Models/Order',
+                'cart_id',
+                'cart_id'
+            )
+    }
 }
 
 module.exports = ShoppingCart

@@ -48,3 +48,4 @@ Route.get('/shoppingcart/generateUniqueId', 'ShoppingCartController.uuid').middl
 Route.get('/shoppingcart/:cart_id', 'ShoppingCartController.list').middleware(['userKey'])
 Route.post('/shoppingcart/add', 'ShoppingCartController.add').middleware(['userKey'])
 Route.put('/shoppingcart/update/:item_id', 'ShoppingCartController.update').middleware(['userKey', 'ItemIdByUser'])
+Route.delete('/shoppingcart/empty/:cart_id', 'ShoppingCartController.delete').middleware(['userKey', 'CartDetailsExist', 'CartIdExist'])

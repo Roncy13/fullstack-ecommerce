@@ -31,6 +31,10 @@ class ShoppingCartController extends Controller {
 
         return ShoppingCartService.update(payload, cart_id, customer_id)
     }
+    
+    delete({ params: { cart_id } }) {
+        return ShoppingCartService.empty(cart_id)
+    }
 }
 
 module.exports = ShoppingCartController
