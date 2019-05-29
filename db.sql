@@ -1335,8 +1335,8 @@ BEGIN
   DECLARE orderId INT;
 
   -- Insert a new record into orders and obtain the new order ID
-  INSERT INTO orders (created_on, customer_id, shipping_id, tax_id) VALUES
-         (NOW(), inCustomerId, inShippingId, inTaxId);
+  INSERT INTO orders (cart_id, created_on, customer_id, shipping_id, tax_id) VALUES
+         (inCartId, NOW(), inCustomerId, inShippingId, inTaxId);
   -- Obtain the new Order ID
   SELECT LAST_INSERT_ID() INTO orderId;
 

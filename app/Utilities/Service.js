@@ -76,9 +76,10 @@ class Service {
             values.push(val)
         })
 
-        const result = async () => (await Database.raw(`CALL ${storeProc}(${questions.join(',')})`, values))[0][0]
+        const result = async () => (await Database.raw(`CALL ${storeProc}(${questions.join(',')})`, values))[0][0],
+            key = `${ values.join(',') }`
         
-        return (call) ? this.Cache.cacheSP(`${this.name}-${ values.join(',') }`, result) : result()
+        return (call) ? this.Cache.cacheSP(key, result) : result()
     }
 
     async spNoCache(storeProc = "", args = []) {
