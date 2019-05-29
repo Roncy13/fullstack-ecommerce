@@ -63,7 +63,12 @@ Route.get('orders/inCustomer', 'OrderController.list').middleware(['userKey'])
 Route.get('orders/shortDetail/:order_id', 'OrderController.shorDetail').middleware(['userKey'])
 Route.get('orders/items/:order_id', 'OrderController.items').middleware(['userKey'])
 
+// Endpoints For Tax
 
 Route.get('tax', 'TaxController.list')
 Route.get('tax/:tax_id', 'TaxController.info')
 
+// Endpoints for Shipping
+
+Route.get('shipping/region', 'ShippingController.list')
+Route.get('shipping/region/:shipping_id', 'ShippingController.info')
