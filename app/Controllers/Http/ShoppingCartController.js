@@ -35,6 +35,20 @@ class ShoppingCartController extends Controller {
     delete({ params: { cart_id } }) {
         return ShoppingCartService.empty(cart_id)
     }
+
+    move({ params: { cart_id, customer_id, item_id } }) {
+        const payload = {
+            cart_id,
+            customer_id,
+            item_id
+        }
+
+        return ShoppingCartService.move(payload)
+    }
+
+    async totalAmount({ params: { cart_id } }) {
+        return await ShoppingCartService.totalAmount(cart_id)
+    }
 }
 
 module.exports = ShoppingCartController

@@ -1,6 +1,8 @@
 'use strict'
 
 const BaseExceptionHandler = use('BaseExceptionHandler')
+const Logger = use('Logger')
+const { merge } = require('lodash')
 
 /**
  * This class handles all exceptions thrown during
@@ -21,7 +23,7 @@ class ExceptionHandler extends BaseExceptionHandler {
    * @return {void}
    */
   async handle (error, { request, response }) {
-    response.status(error.status).json({ error: error.message })
+    response.status(error.status).json({ error: "Error In Server, Please Contact IT for Support" })
   }
 
   /**
@@ -34,7 +36,12 @@ class ExceptionHandler extends BaseExceptionHandler {
    *
    * @return {void}
    */
-  async report (error, { request }) {
+  async report (error, { request, params }) {
+    const data = merge(request.all(), params)
+
+    Logger.error('Error in Server')
+    Logger.error('Error Details: ', error)
+    Logger.error('Error Parameters: ', data)
   }
 }
 

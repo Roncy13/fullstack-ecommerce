@@ -2,11 +2,18 @@
 const Service = use('App/Utilities/Service')
 const Database = use('Database')
 const Customer = use('App/Models/Customer')
+const ShoppingCartUser = use('App/Models/ShoppingCartUser')
 
 class ShoppingCartService extends Service {
 
     constructor(name) {
         super(name)
+    }
+
+    async getCustomerByCart(cart_id) {
+        const { customer_id } = await ShoppingCartUser.findBy('cart_id', cart_id)
+        
+        return customer_id
     }
 
     async uuid(auth) {
@@ -88,6 +95,39 @@ class ShoppingCartService extends Service {
             key = this.generateKey(cart_id, customer_id)
 
         return await this.Cache.remove(key)
+    }
+
+    async getCartDb(cart_id) {
+        const ShopUser = await this
+            .Model
+                .query()
+                    .where({ cart_id })
+                    .fetch()
+        
+        return (ShopUser) ? ShopUser.toJSON() : []
+    }
+
+    async move(payload) {
+        const { item_id, customer_id, cart_id } = payload
+
+        await this.spNoCache('shopping_cart_move_product_to_cart', [item_id])
+        
+        const newDetails = await this.getCartDb(cart_id, customer_id),
+            key = this.generateKey(cart_id, customer_id)
+
+        await this.Cache.forever(key, newDetails)
+
+        return newDetails
+    }
+
+    async totalAmount(cart_id) {
+        const totalkey = `total-amount-${cart_id}`,
+            func = async () => {
+                return await this.spNoCache('shopping_cart_get_total_amount', [cart_id])
+            },
+            amount = await this.Cache.get(totalkey, func)
+        
+        return amount
     }
 }
 
