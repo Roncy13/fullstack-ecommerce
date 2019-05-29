@@ -45,9 +45,11 @@ Route.put('customers/address', 'CustomerController.address').middleware(['userKe
 Route.put('customers/creditCard', 'CustomerController.creditCard').middleware(['userKey'])
 
 Route.get('shoppingcart/generateUniqueId', 'ShoppingCartController.uuid').middleware(['userKey'])
-Route.get('shoppingcart/:cart_id', 'ShoppingCartController.list').middleware(['userKey'])
 Route.post('shoppingcart/add', 'ShoppingCartController.add').middleware(['userKey'])
 Route.put('shoppingcart/update/:item_id', 'ShoppingCartController.update').middleware(['userKey', 'ItemIdByUser'])
 Route.delete('shoppingcart/empty/:cart_id', 'ShoppingCartController.delete').middleware(['userKey', 'CartDetailsExist', 'CartIdExist'])
 Route.get('shoppingcart/moveToCart/:item_id', 'ShoppingCartController.move').middleware(['userKey', 'ItemIdByUser' ,'CartIdExist'])
-//Route.post('​shoppingcart​/total/amount/:cart_id', 'ShoppingCartController.totalAmount').middleware(['userKey', 'CartIdExist'])
+
+Route.get('shoppingcart/:cart_id', 'ShoppingCartController.list').middleware(['userKey'])
+
+Route.get('shoppingcart/totalAmount/:cart_id', 'ShoppingCartController.totalAmount').middleware(['userKey', 'CartIdExist'])

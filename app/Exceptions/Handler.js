@@ -38,7 +38,7 @@ class ExceptionHandler extends BaseExceptionHandler {
    */
   async report (error, { request, params }) {
     const data = merge(request.all(), params)
-
+    console.log(request.url())
     Logger.error('Error in Server')
     Logger.error('Error Details: ', error)
     Logger.error('Error Parameters: ', data)

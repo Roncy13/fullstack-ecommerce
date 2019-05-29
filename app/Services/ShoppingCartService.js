@@ -125,9 +125,9 @@ class ShoppingCartService extends Service {
             func = async () => {
                 return await this.spNoCache('shopping_cart_get_total_amount', [cart_id])
             },
-            amount = await this.Cache.get(totalkey, func)
+            { data } = await this.Cache.get(totalkey, func, false)
         
-        return amount
+        return data[0]
     }
 }
 
