@@ -68,7 +68,6 @@ class ShoppingCartService extends Service {
     }
 
     async update(payload, cart_id, customer_id) {
-        
         await this.callSP('shopping_cart_update', payload)
 
         const key = this.generateKey(cart_id, customer_id),
