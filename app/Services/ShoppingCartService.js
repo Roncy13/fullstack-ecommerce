@@ -22,6 +22,9 @@ class ShoppingCartService extends Service {
                 WHERE
                     orders.order_id is NULL AND
                     shopping_cart_user.customer_id = ?
+                ORDER BY 
+                    id desc
+                LIMIT 1
             `, [customer_id]))[0]
         
         if (cartUUID.length === 0) {
@@ -31,9 +34,11 @@ class ShoppingCartService extends Service {
             
             await CustomerSC.shoppingCart().create({ cart_id })
 
-            return {
-                cart_id
-            }
+            return { cart_id }
+        } else {
+            const { cart_id } = cartUUID[0]
+
+            return { cart_id }
         }
     }
 

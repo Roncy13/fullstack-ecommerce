@@ -1,7 +1,7 @@
 -- Change DELIMITER to $$
 DELIMITER $$
 -- Create customer_update_account stored procedure
-CREATE PROCEDURE shopping_cart_update(IN inItemId VARCHAR(36), IN inQuantity INT)
+CREATE PROCEDURE shopping_cart_update(IN inItemId INT, IN inQuantity INT)
 BEGIN
   IF inQuantity > 0 THEN
     UPDATE shopping_cart
