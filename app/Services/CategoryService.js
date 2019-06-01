@@ -10,6 +10,10 @@ class CategoryService extends Service {
         super(name)
     }
 
+    list() {
+        return this.Model.all()
+    }
+
     byId(category_id) {
         return this.callSP('catalog_get_category_details', [category_id])
     }
