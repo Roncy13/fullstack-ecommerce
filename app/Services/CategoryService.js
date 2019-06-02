@@ -10,8 +10,12 @@ class CategoryService extends Service {
         super(name)
     }
 
-    list() {
-        return this.Model.all()
+    async list() {
+        const { data } = await this.Cache.cacheSP( `category-list`, async() => 
+            this.Model.all()
+        )
+
+        return data
     }
 
     byId(category_id) {

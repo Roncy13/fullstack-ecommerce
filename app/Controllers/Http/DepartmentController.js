@@ -1,14 +1,19 @@
 'use strict'
 const DepartmentService = use('App/Services/DepartmentService')
+const Controller = use('App/Utilities/Controller')
 
-class DepartmentController {
+class DepartmentController extends Controller {
     
-    list() {
-        return DepartmentService.list()
+    async list() {
+        const { data } = await DepartmentService.list()
+
+        return data
     }
 
-    byId({ params: { department_id } }) {
-        return DepartmentService.byId(department_id)
+    async byId({ params: { department_id } }) {
+        const { data } = await DepartmentService.byId(department_id)
+
+        return data.length > 0 ? data[0] : {}
     }
 }
 

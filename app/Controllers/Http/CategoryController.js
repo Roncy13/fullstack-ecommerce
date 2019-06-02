@@ -1,7 +1,8 @@
 'use strict'
 const CategoryService = use('App/Services/CategoryService')
+const Controller = use('App/Utilities/Controller')
 
-class CategoryController {
+class CategoryController extends Controller {
 
     page({ request }) {
 
