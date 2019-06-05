@@ -22,8 +22,15 @@ class ExceptionHandler extends BaseExceptionHandler {
    *
    * @return {void}
    */
-  async handle (error, { request, response }) {
-    response.status(error.status).json({ error: "Error In Server, Please Contact IT for Support" })
+  async handle (error, { response }) {
+    let message = (error.name === "ValidationException") ? error.messages : error.message,
+      code = error.code
+
+    if (error.status === 500) {
+      message = "Error In Server, Please Contact IT for Support"
+    }
+
+    return response.status(error.status).json({ message, code, status: error.status })
   }
 
   /**
@@ -38,7 +45,6 @@ class ExceptionHandler extends BaseExceptionHandler {
    */
   async report (error, { request, params }) {
     const data = merge(request.all(), params)
-    console.log(request.url())
     Logger.error('Error in Server')
     Logger.error('Error Details: ', error)
     Logger.error('Error Parameters: ', data)
