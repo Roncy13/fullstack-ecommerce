@@ -9,15 +9,15 @@ class AttributeService extends Service {
     }
 
     list(attribute_id) {
-        return this.callSP('catalog_get_attribute_details', [attribute_id])
+        return this.callPrepSP('catalog_get_attribute_details', [attribute_id], 'details')
     }
 
     values(attribute_id) {
-        return this.callSP('catalog_get_attribute_values', [attribute_id])
+        return this.callPrepSP('catalog_get_attribute_values', [attribute_id], 'values')
     }
 
     product(product_id) {
-        return this.callSP('catalog_get_product_attributes', [product_id])
+        return this.callPrepSP('catalog_get_product_attributes', [product_id], 'product-attributes')
     }
 }
 
