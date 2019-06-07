@@ -34,7 +34,7 @@ Route.get('products/:id', 'ProductController.byId')
 Route.get('products/inCategory/:category_id', 'ProductController.categories')
 Route.get('products/inDepartment/:department_id',  'ProductController.department')
 Route.get('products/:product_id/details', 'ProductController.productDetailsbyId')
-Route.get('products/:product_id/locations', 'ProductController.productLocationsbyId')
+Route.get('products/:product_id/locations', 'ProductController.productLocationsbyId')   
 Route.get('products/:product_id/reviews', 'ProductController.productReviewsbyId')
 
 // Customer end points
@@ -54,7 +54,7 @@ Route.get('shoppingcart/:cart_id', 'ShoppingCartController.list').middleware(['u
 Route.get('shoppingcart/totalAmount/:cart_id', 'ShoppingCartController.totalAmount').middleware(['userKey', 'CartIdExist'])
 Route.get('shoppingcart/saveForLater/:item_id', 'ShoppingCartController.later').middleware(['userKey', 'ItemIdByUser'])
 Route.get('shoppingcart/getSaved/:cart_id', 'ShoppingCartController.saved').middleware(['userKey', 'CartIdExist'])
-Route.get('shoppingcart/removeProduct/:item_id', 'ShoppingCartController.remove').middleware(['userKey', 'ItemIdByUser'])
+Route.delete('shoppingcart/removeProduct/:item_id', 'ShoppingCartController.remove').middleware(['userKey', 'ItemIdByUser'])
 
 // Endpoints for Orders
 

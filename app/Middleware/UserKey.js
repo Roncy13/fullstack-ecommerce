@@ -3,7 +3,7 @@
 class UserKey {
   async handle ({ request, response }, next) {
     // call next to advance the request
-    const userKey = request.header('user-key')
+    const userKey = await request.header('user-key')
    
     if (!userKey) {
       return response

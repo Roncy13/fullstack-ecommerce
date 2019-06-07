@@ -82,11 +82,8 @@ class ShoppingCartService extends Service {
     async update(payload, cart_id, customer_id) {
         await this.callSP('shopping_cart_update', payload)
 
-        const key = this.generateKey(cart_id, customer_id),
-            data = (await this.Model
-                .query()
-                    .where('cart_id', cart_id)
-                    .fetch()).toJSON()
+        const key = `SHOPPING-CART-${this.generateKey(cart_id, customer_id)}`,
+            data = await this.spNoCache('shopping_cart_get_products', [cart_id])
 
         await this.Cache.forever(key, data)
 
@@ -97,7 +94,7 @@ class ShoppingCartService extends Service {
         await this.spNoCache('shopping_cart_empty', [cart_id])
 
         const customer_id = await this.getCustomerByCart(cart_id),
-            key = this.generateKey(cart_id, customer_id)
+            key = `SHOPPING-CART-${this.generateKey(cart_id, customer_id)}`
 
         return await this.Cache.remove(key)
     }
@@ -118,7 +115,7 @@ class ShoppingCartService extends Service {
         await this.spNoCache('shopping_cart_move_product_to_cart', [item_id])
         
         const newDetails = await this.getCartDb(cart_id, customer_id),
-            key = this.generateKey(cart_id, customer_id)
+            key = `SHOPPING-CART-${this.generateKey(cart_id, customer_id)}`
 
         await this.Cache.forever(key, newDetails)
 
@@ -141,7 +138,7 @@ class ShoppingCartService extends Service {
             cart_id,
             item_id
         } = payload,
-        key = this.generateKey(cart_id, customer_id)
+        key = `SHOPPING-CART-${this.generateKey(cart_id, customer_id)}`
 
         await this.spNoCache('shopping_cart_save_product_for_later', [item_id])
         await this.Cache.remove(key)
@@ -161,14 +158,14 @@ class ShoppingCartService extends Service {
 
     async remove(cart_id, customer_id, item_id) {
         
-        const key = await this.generateKey(cart_id, customer_id)
+        const key = `SHOPPING-CART-${this.generateKey(cart_id, customer_id)}`
 
         await this.spNoCache('shopping_cart_remove_product', [item_id])
         await this.Cache.remove(key)
 
-        const data = await this.callSP('shopping_cart_get_products', [cart_id])
+        const data = await this.spNoCache('shopping_cart_get_products', [cart_id])
         await this.Cache.forever(key, data)
-        
+       
         return data
     }
 }
