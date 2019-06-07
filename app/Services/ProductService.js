@@ -14,7 +14,7 @@ class ProductService extends Service {
            all_words,
            description_length,
            limit,
-           (page - 1) * limit
+           (page) * limit
         ]),
         count = (await this.spNoCache('catalog_count_search_result', [
             query_string,

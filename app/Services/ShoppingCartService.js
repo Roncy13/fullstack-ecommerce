@@ -50,7 +50,7 @@ class ShoppingCartService extends Service {
     }
 
     generateKey(cart_id, customer_id) {
-        return `${cart_id}-${customer_id}`
+        return this.Cache.getCacheKey(cart_id, customer_id)
     }
 
     async add(payload, auth) {
@@ -59,19 +59,24 @@ class ShoppingCartService extends Service {
 
         const customer_id = await this.getAuthId(auth),
             { cart_id } = payload,
-            key = this.generateKey(cart_id, customer_id),
+            key = `SHOPPING-CART-${this.generateKey(cart_id, customer_id)}`,
             data = await this.spNoCache('shopping_cart_get_products', [cart_id])
-    
+
         await this.Cache.forever(key, data)
         
-        return await this.Cache.retrieveList(key)
+        const result = await this.Cache.retrieveList(key)
+
+        return result
     }
 
     async shoppingList(auth, cart_id) {
         const customer_id = await this.getAuthId(auth),
-            shopListKey = this.generateKey(cart_id, customer_id)
-
-        return await this.Cache.retrieveList(shopListKey)
+            shopListKey = this.generateKey(cart_id, customer_id),
+            { data } = await this.Cache.get(shopListKey, async () => {
+                return await this.spNoCache('shopping_cart_get_products', [cart_id])
+            }, false)
+       
+        return data
     }
 
     async update(payload, cart_id, customer_id) {

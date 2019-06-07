@@ -8,16 +8,28 @@ class AttributeService extends Service {
         super(name)
     }
 
-    list(attribute_id) {
-        return this.callPrepSP('catalog_get_attribute_details', [attribute_id], 'details')
+    async list() {
+        const { data } = await this.callPrepSP('catalog_get_attributes', [], 'list')
+
+        return data
     }
 
-    values(attribute_id) {
-        return this.callPrepSP('catalog_get_attribute_values', [attribute_id], 'values')
+    async byId(attribute_id) {
+        const { data } = await this.callPrepSP('catalog_get_attribute_details', [attribute_id], 'details')
+
+        return data
     }
 
-    product(product_id) {
-        return this.callPrepSP('catalog_get_product_attributes', [product_id], 'product-attributes')
+    async values(attribute_id) {
+        const { data } = await this.callPrepSP('catalog_get_attribute_values', [attribute_id], 'values')
+
+        return data
+    }
+
+    async product(product_id) {
+        const { data } = await this.callPrepSP('catalog_get_product_attributes', [product_id], 'product-attributes')
+
+        return data
     }
 }
 

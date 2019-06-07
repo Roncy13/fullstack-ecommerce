@@ -1060,6 +1060,7 @@ BEGIN
              sc.quantity,
              COALESCE(NULLIF(p.discounted_price, 0),
                       p.price) * sc.quantity AS subtotal
+             p.thumbnail
   FROM       shopping_cart sc
   INNER JOIN product p
                ON sc.product_id = p.product_id

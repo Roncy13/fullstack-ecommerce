@@ -23,7 +23,8 @@ Route.get('categories/:category_id', 'CategoryController.byId')
 
 Route.get('categories/inProduct/:product_id', 'CategoryController.product')
 Route.get('categories/inDepartment/:department_id', 'CategoryController.department')
-Route.get('attributes/:attribute_id', 'AttributeController.list')
+Route.get('attributes', 'AttributeController.list')
+Route.get('attributes/:attribute_id', 'AttributeController.byId')
 Route.get('attributes/values/:attribute_id', 'AttributeController.values')
 Route.get('attributes/inProduct/:product_id', 'AttributeController.product')
 
@@ -45,7 +46,7 @@ Route.put('customers/address', 'CustomerController.address').middleware(['userKe
 Route.put('customers/creditCard', 'CustomerController.creditCard').middleware(['userKey'])
 
 Route.get('shoppingcart/generateUniqueId', 'ShoppingCartController.uuid').middleware(['userKey'])
-Route.post('shoppingcart/add', 'ShoppingCartController.add').middleware(['userKey'])
+Route.post('shoppingcart/add', 'ShoppingCartController.add').middleware(['userKey', 'AddAttribute'])
 Route.put('shoppingcart/update/:item_id', 'ShoppingCartController.update').middleware(['userKey', 'ItemIdByUser'])
 Route.delete('shoppingcart/empty/:cart_id', 'ShoppingCartController.delete').middleware(['userKey', 'CartDetailsExist', 'CartIdExist'])
 Route.get('shoppingcart/moveToCart/:item_id', 'ShoppingCartController.move').middleware(['userKey', 'ItemIdByUser' ,'CartIdExist'])

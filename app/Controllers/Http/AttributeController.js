@@ -3,8 +3,12 @@ const AttributeService = use('App/Services/AttributeService')
 
 class AttributeController {
 
-    list({ params: { attribute_id }}) {
-        return AttributeService.list(attribute_id)
+    list() {
+        return AttributeService.list()
+    }
+
+    byId({ params: { attribute_id }}) {
+        return AttributeService.byId(attribute_id)
     }
 
     values({ params: { attribute_id } }) {

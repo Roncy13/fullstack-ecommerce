@@ -32,7 +32,7 @@ class CategoryService extends Service {
 
     async product(product_id) {
         const product = await ProductModel.findBy('product_id', product_id)
-
+        
         if (product) {
             const result = await product.category().select(['category_id' , 'name', 'department_id']).fetch()
 

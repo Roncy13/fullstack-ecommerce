@@ -43,7 +43,8 @@ const namedMiddleware = {
   userKey: 'App/Middleware/UserKey',
   ItemIdByUser: 'App/Middleware/ItemIdByUser',
   CartIdExist: 'App/Middleware/CartIdExist',
-  CartDetailsExist: 'App/Middleware/CartDetailsExist'
+  CartDetailsExist: 'App/Middleware/CartDetailsExist',
+  AddAttribute: 'App/Middleware/AddAttribute'
 }
 
 /*
